@@ -1,8 +1,23 @@
+import { env } from './config/env.js';
+import { logError, logEvent } from './lib/logger.js';
 import { createApp } from './app.js';
+import { initializeDataStore } from './storage/db.js';
 
-const port = Number(process.env.PORT ?? 3000);
-const app = createApp();
+async function start(): Promise<void> {
+  try {
+    await initializeDataStore();
 
-app.listen(port, () => {
-  console.log(`[${new Date().toISOString()}] backend listening on :${port}`);
-});
+    const app = createApp();
+    app.listen(env.PORT, () => {
+      logEvent('server_started', {
+        port: env.PORT,
+        environment: env.NODE_ENV,
+      });
+    });
+  } catch (error) {
+    logError('startup_failed', error);
+    process.exit(1);
+  }
+}
+
+void start();
