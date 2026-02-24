@@ -1,0 +1,31 @@
+# dependencies
+node_modules/
+apps/*/node_modules/
+
+# build outputs
+dist/
+apps/*/dist/
+coverage/
+*.tsbuildinfo
+.vite/
+
+# environment
+.env
+.env.*
+!.env.example
+
+# local demo data
+data/*
+!data/.gitkeep
+
+# logs
+*.log
+logs/
+
+# test/cache
+.nyc_output/
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
