@@ -6,6 +6,10 @@ import { env } from './config/env.js';
 import { isAppError, toErrorResponse } from './lib/errors.js';
 import { logError } from './lib/logger.js';
 import { sessionMiddleware } from './middleware/session.js';
+import { authRoutes } from './routes/authRoutes.js';
+import { devRoutes } from './routes/devRoutes.js';
+import { passkeyRoutes } from './routes/passkeyRoutes.js';
+import { sessionRoutes } from './routes/sessionRoutes.js';
 
 export function createApp(): express.Express {
   const app = express();
@@ -18,6 +22,11 @@ export function createApp(): express.Express {
   app.get('/health', (_req, res) => {
     res.json({ status: 'ok' });
   });
+
+  app.use('/api/auth', authRoutes);
+  app.use('/api/session', sessionRoutes);
+  app.use('/api/passkeys', passkeyRoutes);
+  app.use('/api/dev', devRoutes);
 
   app.use((error: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
     if (isAppError(error)) {

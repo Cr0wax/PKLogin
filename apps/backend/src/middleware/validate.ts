@@ -15,3 +15,16 @@ export function validateBody<T>(schema: ZodType<T>): RequestHandler {
     next();
   };
 }
+
+export function validateParams<T>(schema: ZodType<T>): RequestHandler {
+  return (req: Request, _res: Response, next: NextFunction) => {
+    const parsed = schema.safeParse(req.params);
+    if (!parsed.success) {
+      next(new AppError(400, 'VALIDATION_ERROR', 'Route parameters are invalid', parsed.error.issues));
+      return;
+    }
+
+    req.params = parsed.data as Request['params'];
+    next();
+  };
+}

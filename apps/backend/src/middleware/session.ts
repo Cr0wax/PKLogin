@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 
 import { env } from '../config/env.js';
+import { refreshSession, setSessionCookie } from '../services/sessionService.js';
 import { sessionsRepository, usersRepository } from '../storage/repositories.js';
 
 export async function sessionMiddleware(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -13,14 +14,12 @@ export async function sessionMiddleware(req: Request, res: Response, next: NextF
 
   const session = await sessionsRepository.findById(sessionId);
   if (!session) {
-    res.clearCookie(env.SESSION_COOKIE_NAME);
     next();
     return;
   }
 
   if (new Date(session.expiresAt).getTime() <= Date.now()) {
     await sessionsRepository.deleteById(session.id);
-    res.clearCookie(env.SESSION_COOKIE_NAME);
     next();
     return;
   }
@@ -28,13 +27,15 @@ export async function sessionMiddleware(req: Request, res: Response, next: NextF
   const user = await usersRepository.findById(session.userId);
   if (!user) {
     await sessionsRepository.deleteById(session.id);
-    res.clearCookie(env.SESSION_COOKIE_NAME);
     next();
     return;
   }
 
-  req.sessionId = session.id;
-  req.sessionRecord = session;
+  const refreshed = await refreshSession(session);
+  setSessionCookie(res, refreshed.id);
+
+  req.sessionId = refreshed.id;
+  req.sessionRecord = refreshed;
   req.currentUser = user;
 
   next();
