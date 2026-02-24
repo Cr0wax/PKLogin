@@ -1,19 +1,19 @@
 # Plan
 
 ## In Progress
-- Implement local passkey demonstrator (Vue SPA + Express API + WebAuthn + JSON persistence).
-  - Acceptance notes:
-    - Real WebAuthn ceremonies (server-generated options and server verification)
-    - Two auth paths: passkey-only and username+passkey
-    - Account management for passkeys (list/add/delete)
-    - Deleting final passkey deletes account and logs user out
-    - Dev-only reset-all-data
+- None.
 
 ## Next
-- Implement backend foundation (validated config, storage, session middleware)
-- Implement WebAuthn ceremony routes and domain services
-- Implement frontend flows and account UI
-- Add tests and update docs
+- Add frontend integration tests for key auth/account flows.
+- Add optional rate limiting and lockout rules for repeated auth failures.
+- Improve structured log persistence for demo event review.
 
 ## Done
-- Approved implementation plan and phased commit/push workflow
+- Implemented local passkey demonstrator with Vue SPA + Express API + WebAuthn verification.
+- Added both auth paths: passkey-only and username+passkey.
+- Added account passkey management (list/add/delete).
+- Implemented last-passkey deletion behavior (delete user + logout).
+- Implemented dev-only reset-all-data endpoint and UI action.
+- Added JSON storage helpers with atomic write semantics.
+- Added backend tests for storage, validation, and last-passkey deletion behavior.
+- Added and validated monorepo build/lint/test scripts.
