@@ -30,25 +30,25 @@ export function assertWebAuthnSupport(): void {
   }
 }
 
-export async function runRegistration(options: Record<string, unknown>): Promise<Record<string, unknown>> {
+export async function runRegistration(options: unknown): Promise<Record<string, unknown>> {
   try {
     const response = await startRegistration({
-      optionsJSON: options,
+      optionsJSON: options as Parameters<typeof startRegistration>[0]['optionsJSON'],
     });
 
-    return response as Record<string, unknown>;
+    return response as unknown as Record<string, unknown>;
   } catch (error) {
     throw normalizeWebAuthnError(error);
   }
 }
 
-export async function runAuthentication(options: Record<string, unknown>): Promise<Record<string, unknown>> {
+export async function runAuthentication(options: unknown): Promise<Record<string, unknown>> {
   try {
     const response = await startAuthentication({
-      optionsJSON: options,
+      optionsJSON: options as Parameters<typeof startAuthentication>[0]['optionsJSON'],
     });
 
-    return response as Record<string, unknown>;
+    return response as unknown as Record<string, unknown>;
   } catch (error) {
     throw normalizeWebAuthnError(error);
   }

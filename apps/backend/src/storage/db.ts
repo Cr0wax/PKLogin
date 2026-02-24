@@ -5,8 +5,11 @@ import { ensureDirectory, ensureJsonFile } from './fileStore.js';
 
 const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(currentDirectory, '../../../../');
+const configuredDataDirectory = process.env.DATA_DIR;
 
-export const dataDirectoryPath = path.resolve(repositoryRoot, 'data');
+export const dataDirectoryPath = configuredDataDirectory
+  ? path.resolve(configuredDataDirectory)
+  : path.resolve(repositoryRoot, 'data');
 
 export const dataFilePaths = {
   users: path.join(dataDirectoryPath, 'users.json'),

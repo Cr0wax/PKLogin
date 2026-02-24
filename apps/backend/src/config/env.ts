@@ -30,6 +30,7 @@ const envSchema = z.object({
   SESSION_TTL_HOURS: z.coerce.number().int().min(1).max(720).default(24),
   DEV_RESET_ENABLED: z.preprocess(parseBoolean, z.boolean().default(true)),
   CHALLENGE_TTL_SECONDS: z.coerce.number().int().min(30).max(3600).default(300),
+  DATA_DIR: z.string().min(1).optional(),
 });
 
 export type AppEnv = z.infer<typeof envSchema>;

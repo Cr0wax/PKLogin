@@ -1,4 +1,6 @@
 import {
+  type AuthenticationResponseJSON,
+  type RegistrationResponseJSON,
   generateAuthenticationOptions,
   generateRegistrationOptions,
   verifyAuthenticationResponse,
@@ -31,8 +33,7 @@ function toCredentialIdString(id: string | Uint8Array | ArrayBuffer): string {
 
 function toExcludeCredentials(credentialIds: string[]) {
   return credentialIds.map((credentialId) => ({
-    id: isoBase64URL.toBuffer(credentialId),
-    type: 'public-key' as const,
+    id: credentialId,
   }));
 }
 
@@ -44,7 +45,7 @@ export async function createRegistrationOptions(args: {
   const options = await generateRegistrationOptions({
     rpName: env.RP_NAME,
     rpID: env.RP_ID,
-    userID: args.userId,
+    userID: new TextEncoder().encode(args.userId),
     userName: args.username,
     userDisplayName: args.username,
     attestationType: 'none',
@@ -63,7 +64,7 @@ export async function verifyRegistration(args: {
   expectedChallenge: string;
 }) {
   const verification = await verifyRegistrationResponse({
-    response: args.response as Parameters<typeof verifyRegistrationResponse>[0]['response'],
+    response: args.response as unknown as RegistrationResponseJSON,
     expectedChallenge: args.expectedChallenge,
     expectedOrigin: env.EXPECTED_ORIGIN,
     expectedRPID: env.RP_ID,
@@ -91,7 +92,7 @@ export async function verifyAuthentication(args: {
   passkey: StoredPasskey;
 }) {
   const verification = await verifyAuthenticationResponse({
-    response: args.response as Parameters<typeof verifyAuthenticationResponse>[0]['response'],
+    response: args.response as unknown as AuthenticationResponseJSON,
     expectedChallenge: args.expectedChallenge,
     expectedOrigin: env.EXPECTED_ORIGIN,
     expectedRPID: env.RP_ID,
