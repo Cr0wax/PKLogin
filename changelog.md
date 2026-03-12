@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-03-12
+- Cleaned up `AGENTS.md` engineering guidelines by removing stale duplicate items and adding repo-verified npm workflow commands.
+
 ## 2026-02-24
 - Scaffolded monorepo workspace with `apps/frontend` and `apps/backend`.
 - Added root scripts and environment template for local demo execution.
