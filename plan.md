@@ -9,6 +9,7 @@
 - Improve structured log persistence for demo event review.
 
 ## Done
+- Refreshed AGENTS.md with repo-verified command workflow guidance and removed stale/redundant engineering notes.
 - Implemented local passkey demonstrator with Vue SPA + Express API + WebAuthn verification.
 - Added both auth paths: passkey-only and username+passkey.
 - Added account passkey management (list/add/delete).

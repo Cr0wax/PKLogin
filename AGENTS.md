@@ -138,13 +138,16 @@ A feature is done only when:
 ---
 
 ## 12) Engineering guidelines (mandatory)
-- Keep business logic in backend; frontend should orchestrate and render.
 - Prefer explicit schemas and validation over “best effort” parsing.
 - Do not silently drop data; emit warnings with counts (surface in UI and logs).
-- Log all processing steps with timestamps into per-job logs:
-  - Treat a “job” as a mission; maintain per-mission logs as defined above.
-- Fail fast on schema incompatibilities; guide the user to fix mapping/policy (TelemetryConfiguration.json).
 - Keep configuration minimal and local; avoid complex secrets management for MVP.
+
+### Working commands (repo-verified)
+- Use root scripts for standard workflows: `npm run dev`, `npm run lint`, `npm run test`, `npm run build`.
+- Use workspace scripts for focused work:
+  - backend: `npm --workspace apps/backend run dev|test|lint|build`
+  - frontend: `npm --workspace apps/frontend run dev|lint|build`
+- Treat frontend `npm --workspace apps/frontend run test` as a placeholder unless real UI tests are added.
 
 ### Mandatory task-intake flow (always before implementation)
 For every new request, follow this sequence in order:
