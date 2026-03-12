@@ -176,6 +176,7 @@ Do not bundle multiple unrelated features in one implementation cycle unless exp
 2) Create and switch to a new branch first before editing files or committing.
 3) Use a codex/ prefix for agent-created branches (e.g., codex/mission-timeout).
 4) Keep all commits for that feature on the feature branch until reviewed/merged.
+5) Before branching, check if `master` is not behind remote, `pull` when needed.
 
 ### Mandatory sensitive-data exposure check (before sharing outputs)
 Before committing or sharing any docs, examples, logs, prompts, screenshots, or report artifacts:
