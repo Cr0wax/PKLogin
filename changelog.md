@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-03-20
+- Updated `README.md` workspace command docs to match the current backend and frontend scripts.
+
 ## 2026-03-12
 - Cleaned up `AGENTS.md` engineering guidelines by removing stale duplicate items and adding repo-verified npm workflow commands.
 

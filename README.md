@@ -92,10 +92,17 @@ Root:
 
 Backend workspace:
 - `npm --workspace apps/backend run dev`
+- `npm --workspace apps/backend run lint`
+- `npm --workspace apps/backend run build`
+- `npm --workspace apps/backend run start`
 - `npm --workspace apps/backend run test`
 
 Frontend workspace:
 - `npm --workspace apps/frontend run dev`
+- `npm --workspace apps/frontend run lint`
+- `npm --workspace apps/frontend run build`
+- `npm --workspace apps/frontend run preview`
+- `npm --workspace apps/frontend run test` (placeholder)
 
 ## API Summary
 Base URL: `/api`
