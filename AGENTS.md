@@ -120,6 +120,7 @@ If the user has not answered yet, proceed only with clearly marked assumptions a
 ---
 
 ## 10) Repo hygiene
+Be extremely concise, sacrifice grammar for concision. Update documentation only when working with code itself like implementation of new features, changes, bugfixes.
 - Keep `README.md` updated with run instructions and demo limitations.
 - Keep `plan.md` updated (in-progress / next / done).
 - Append changes to `changelog.md` under a `YYYY-MM-DD` header.
