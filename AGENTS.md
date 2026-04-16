@@ -139,32 +139,33 @@ A feature is done only when:
 ---
 
 ## 12) Engineering guidelines (mandatory)
-- Prefer explicit schemas and validation over “best effort” parsing.
-- Do not silently drop data; emit warnings with counts (surface in UI and logs).
-- Keep configuration minimal and local; avoid complex secrets management for MVP.
+- Prefer explicit schemas and boundary validation (`zod`) over “best effort” parsing.
+- Keep route handlers thin: validate in middleware, keep business logic in services.
+- Do not silently drop data; surface failures via explicit errors and structured logs.
+- Keep configuration minimal/local for demo scope; avoid unnecessary infra/secrets tooling.
+- Keep backend JSON payload limits conservative (currently `1mb`).
+- Keep dev reset safety gates intact: endpoint must stay disabled in production and require `DEV_RESET_ENABLED=true`.
+- Treat frontend test command as non-gating placeholder until real UI tests exist.
 
-### Working commands (repo-verified)
-- Use root scripts for standard workflows: `npm run dev`, `npm run lint`, `npm run test`, `npm run build`.
-- Use workspace scripts for focused work:
-  - backend: `npm --workspace apps/backend run dev|test|lint|build`
-  - frontend: `npm --workspace apps/frontend run dev|lint|build`
-- Treat frontend `npm --workspace apps/frontend run test` as a placeholder unless real UI tests are added.
+### Repo-verified workflow commands
+- Use root scripts for full-workspace loops (`dev`, `lint`, `test`, `build`).
+- Use workspace scripts for focused loops on one side.
+- Frontend prod-like smoke check: build + preview in `apps/frontend`.
+- Backend runtime smoke check: build + start in `apps/backend`.
 
-### Mandatory task-intake flow (always before implementation)
-For every new request, follow this sequence in order:
-1) Understand the task: restate scope and confirm assumptions/constraints.
-2) Save the task: record it in plan.md with implementation details and acceptance notes.
-3) Propose next step: present the immediate next implementation step before writing code.
-Do not start coding before these three steps are completed.
+### Mandatory task-intake flow (before implementation)
+1) Restate scope, assumptions, and constraints.
+2) Record task in `plan.md` with implementation and acceptance notes.
+3) State immediate next implementation step.
+Only start coding after these three steps are complete.
 
 ### Mandatory implementation flow (single feature per cycle)
-For implementation work, follow this sequence in order:
-1) Select one feature/task only from plan.md.
-2) Implement code changes for that single feature.
-3) Validate by running tests, or if tests are not available/executable, provide exact manual verification steps. Do not proceed without validation.
+1) Pick one task from `plan.md`.
+2) Implement only that task.
+3) Validate with tests; if tests are unavailable, provide exact manual checks.
 4) Commit code changes.
-5) Update documentation (changelog.md, plan.md, and related docs if applicable).
-6) Commit documentation changes as a separate commit.
+5) Update docs (`changelog.md`, `plan.md`, related docs when applicable).
+6) Commit documentation updates separately.
 
 Changelog append rule:
 - Always write entries under a day header in YYYY-MM-DD format.
