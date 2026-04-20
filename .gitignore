@@ -8,6 +8,7 @@ apps/*/dist/
 coverage/
 *.tsbuildinfo
 .vite/
+pod/
 
 # environment
 .env
