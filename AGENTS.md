@@ -47,7 +47,7 @@ If the user has not answered yet, proceed only with clearly marked assumptions a
 - TypeScript
 
 ### Backend
-- Node.js (LTS)
+- Node.js 20+ (npm 10+)
 - Express
 - TypeScript
 - @simplewebauthn/server
@@ -141,17 +141,19 @@ A feature is done only when:
 ## 12) Engineering guidelines (mandatory)
 - Prefer explicit schemas and boundary validation (`zod`) over “best effort” parsing.
 - Keep route handlers thin: validate in middleware, keep business logic in services.
-- Do not silently drop data; surface failures via explicit errors and structured logs.
+- Surface failures via explicit errors and structured logs; do not silently drop malformed data.
 - Keep configuration minimal/local for demo scope; avoid unnecessary infra/secrets tooling.
 - Keep backend JSON payload limits conservative (currently `1mb`).
 - Keep dev reset safety gates intact: endpoint must stay disabled in production and require `DEV_RESET_ENABLED=true`.
 - Treat frontend test command as non-gating placeholder until real UI tests exist.
+- Use npm workspaces + `package-lock.json`; do not add yarn/pnpm lockfiles.
+- Backend is NodeNext ESM: keep explicit `.js` extension on backend relative imports in `.ts` files.
 
 ### Repo-verified workflow commands
-- Use root scripts for full-workspace loops (`dev`, `lint`, `test`, `build`).
-- Use workspace scripts for focused loops on one side.
-- Frontend prod-like smoke check: build + preview in `apps/frontend`.
-- Backend runtime smoke check: build + start in `apps/backend`.
+- Full check loop: `npm run lint && npm run test && npm run build`.
+- Backend focused loop: `npm --workspace apps/backend run lint && npm --workspace apps/backend run test`.
+- Frontend prod-like smoke check: `npm --workspace apps/frontend run build && npm --workspace apps/frontend run preview`.
+- Backend runtime smoke check: `npm --workspace apps/backend run build && npm --workspace apps/backend run start`.
 
 ### Mandatory task-intake flow (before implementation)
 1) Restate scope, assumptions, and constraints.
