@@ -83,7 +83,7 @@ If the user has not answered yet, proceed only with clearly marked assumptions a
 ---
 
 ## 7) API and domain design rules
-- Keep business logic in backend; frontend should orchestrate and render.
+- Keep backend business logic in services; route handlers validate with middleware, delegate, then shape HTTP responses.
 - Use explicit request/response schemas.
 - Keep endpoints small and predictable.
 - Use consistent error response format:
@@ -102,11 +102,12 @@ If the user has not answered yet, proceed only with clearly marked assumptions a
   2. username-first + passkey login
 - Registration and login flows must be explicit and understandable.
 - Show user-facing error messages for unsupported browser / failed WebAuthn / validation errors.
+- Keep API calls in `services/api.ts`; keep browser WebAuthn calls/error normalization in `services/webauthn.ts`.
 - After login, show:
   - basic user details
   - list of registered passkeys (label + date added)
   - actions to add a passkey or delete a passkey
-- Prefer simple state management over clever abstractions.
+- Use Pinia for shared session/auth state only; keep one-screen form state local.
 
 ---
 
