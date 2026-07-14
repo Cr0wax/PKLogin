@@ -11,18 +11,14 @@ The goal is clarity and correctness of the passkey flow, not production-scale ar
 ---
 
 ## 2) Working mode (mandatory)
-Before writing code for any new feature or change:
-1. Analyze the request and restate the scope.
+Before substantive code changes:
+1. Restate scope, assumptions, and constraints.
 2. Identify ambiguities / missing details.
-3. Ask targeted clarification questions for missing details.
-4. Propose 1–3 implementation options with pros/cons.
-5. Recommend one option.
-6. Wait for user approval.
-7. Only then implement.
+3. Ask targeted clarification questions when domain or UX choices are unclear.
+4. Propose 1–3 implementation options with pros/cons when there is a real design choice.
+5. Recommend one option and wait for approval before implementing unclear or high-impact changes.
 
-Do not skip this sequence.
-
-If the user has not answered yet, proceed only with clearly marked assumptions and keep changes minimal.
+For explicit maintenance tasks with no product ambiguity, proceed with clearly marked assumptions and keep changes minimal.
 
 ---
 
@@ -85,6 +81,7 @@ If the user has not answered yet, proceed only with clearly marked assumptions a
 ## 7) API and domain design rules
 - Keep backend business logic in services; route handlers validate with middleware, delegate, then shape HTTP responses.
 - Use explicit request/response schemas.
+- Validate through `validateBody(...)`, then parse the same schema in handlers before calling services.
 - Keep endpoints small and predictable.
 - Use consistent error response format:
   - `code`
@@ -103,6 +100,7 @@ If the user has not answered yet, proceed only with clearly marked assumptions a
 - Registration and login flows must be explicit and understandable.
 - Show user-facing error messages for unsupported browser / failed WebAuthn / validation errors.
 - Keep API calls in `services/api.ts`; keep browser WebAuthn calls/error normalization in `services/webauthn.ts`.
+- Keep route-level auth checks small; reusable session state belongs in the Pinia session store.
 - After login, show:
   - basic user details
   - list of registered passkeys (label + date added)
@@ -121,7 +119,7 @@ If the user has not answered yet, proceed only with clearly marked assumptions a
 ---
 
 ## 10) Repo hygiene
-Be extremely concise, sacrifice grammar for concision. Update documentation only when working with code itself like implementation of new features, changes, bugfixes.
+Be extremely concise, sacrifice grammar for concision. Keep AGENTS.md as guidance, not a command catalog. Update documentation only when working with code itself like implementation of new features, changes, bugfixes.
 - Keep `README.md` updated with run instructions and demo limitations.
 - Keep `plan.md` updated (in-progress / next / done).
 - Append changes to `changelog.md` under a `YYYY-MM-DD` header.
